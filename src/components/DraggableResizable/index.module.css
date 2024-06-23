@@ -19,7 +19,7 @@
     */
 
     overflow: hidden;
-    position: relative;
+    position: absolute;
 }
 
 /* vertices  */

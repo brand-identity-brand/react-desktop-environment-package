@@ -4,9 +4,9 @@ import type { DragEvent } from 'react'
 
 interface ComponentProps extends React.ComponentProps<'div'> {
   className: string,
-  onDragStart: (e: DragEvent<HTMLDivElement>) => void,
-  onDrag: (e: DragEvent<HTMLDivElement>) => void,
-  onDragEnd: (e: DragEvent<HTMLDivElement>) => void,
+  onDragStart: (e: DragEvent<HTMLElement>) => void,
+  onDrag: (e: DragEvent<HTMLElement>) => void,
+  onDragEnd: (e: DragEvent<HTMLElement>) => void,
 }
 
 export function Border({ className, ...props }: ComponentProps) {
@@ -24,14 +24,14 @@ export function Border({ className, ...props }: ComponentProps) {
     <div
       draggable={true}
       className={style}
-      onDragStart={(e: DragEvent<HTMLDivElement>): void=>{
+      onDragStart={(e: DragEvent<HTMLElement>): void=>{
         onDragStart(e);
       }}
-      onDrag={(e: DragEvent<HTMLDivElement>): void=>{
+      onDrag={(e: DragEvent<HTMLElement>): void=>{
         onDrag(e);
       }}
-        // below deoesnt affect behaviour, but performance increases
-        onDragLeave={(e)=>{
+      // below increase performance and avoids unwanted event firing at the end
+      onDragLeave={(e)=>{
           // prevent dragImage flyover when dropping
           e.preventDefault();
       }}

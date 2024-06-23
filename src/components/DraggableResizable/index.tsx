@@ -47,7 +47,7 @@ export default function DraggableResizable({ children, ...props }: ComponentProp
     const classNames = clsx(
         css.DraggableResizable, 
     )
-    const divRef = useRef<HTMLDivElement>(null);
+    const divRef = useRef<HTMLElement>(null);
 
     const [ gridPosition, setGridPosition ] = useState(initialPosition);
     const [ gridSize, setGridSize ] = useState(initialSize);
@@ -61,7 +61,7 @@ export default function DraggableResizable({ children, ...props }: ComponentProp
                 top: e.clientY
             }
         }
-        function getOnDragMousePositionChange(e: DragEvent<HTMLDivElement>): Position {
+        function getOnDragMousePositionChange(e: DragEvent<HTMLElement>): Position {
             if ( onDragStartMousePositionRef.current !== undefined ) {
                 const mousePositionChange = {
                     left: e.clientX - onDragStartMousePositionRef.current.left,
@@ -86,7 +86,7 @@ export default function DraggableResizable({ children, ...props }: ComponentProp
             }
         }
         // const onDragStartGridPositionRelativeToViewportRef = useRef<Position>({left: 0, top: 0});
-        function inistialiseDrag(e: DragEvent<HTMLDivElement>):void{
+        function inistialiseDrag(e: DragEvent<HTMLElement>):void{
             initialiseOnDragStartMousePositionRef(e)
             initialiseOnDragStartGridPositionRef()
             initialiseOnDragStartGridSizeRef()
@@ -104,15 +104,32 @@ export default function DraggableResizable({ children, ...props }: ComponentProp
             onDragStartGridPositionRef.current = undefined;
         }
 
-        function dragToMove(e){
-            if ( checkIfDragReady() ){
-                const mousePositionChange = getOnDragMousePositionChange(e);
-                // position 
-                const nextPosition = {
-                    left: mousePositionChange.left + onDragStartGridPositionRef.current.left,
-                    top:  mousePositionChange.top + onDragStartGridPositionRef.current.top
+        const draggableProps = {
+            draggable: true,
+            onDrag:(e)=>{            
+                if ( checkIfDragReady() ){
+                    const mousePositionChange = getOnDragMousePositionChange(e);
+                    // position 
+                    const nextPosition = {
+                        left: mousePositionChange.left + onDragStartGridPositionRef.current.left,
+                        top:  mousePositionChange.top + onDragStartGridPositionRef.current.top
+                    }
+                    setGridPosition(nextPosition)
                 }
-                setGridPosition(nextPosition)
+            },
+            onDragStart:(e)=>{inistialiseDrag(e)},
+            // below deoesnt affect behaviour, but performance increases
+            onDragLeave:(e)=>{
+                // prevent dragImage flyover when dropping
+                e.preventDefault();
+            },
+            onDragOver:(e)=>{
+                // prevent dragImage flyover when dropping
+                e.preventDefault();
+            },
+            onDragEnd:(e)=>{
+                endDrag();
+                e.preventDefault();
             }
         }
   return (
@@ -414,9 +431,9 @@ export default function DraggableResizable({ children, ...props }: ComponentProp
                 }
             }}
         />
-        <main className={css.Body}>
+        <div className={css.Body} {...draggableProps}>
             {children}
-        </main>
+        </div>
     </div>
   )
 }
