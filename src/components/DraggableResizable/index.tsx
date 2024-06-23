@@ -1,9 +1,18 @@
 import css from './index.module.css'
 import clsx from 'clsx'
-import { useRef, useState } from 'react';
+import { useRef, useState, createContext } from 'react';
 import type {CSSProperties, DragEvent} from 'react';
 import { Border } from './Border';
 
+export const DraggableResizableContext = createContext(null);
+
+function  DraggableResizableProvider({children,value}){
+    return (
+        <DraggableResizableContext.Provider value={value}>
+            {children}
+        </DraggableResizableContext.Provider>
+    )
+}
 export interface DraggableResizableCSS extends CSSProperties {
     '--border-width': string;
 }
@@ -133,7 +142,7 @@ export default function DraggableResizable({ children, ...props }: ComponentProp
                 e.preventDefault();
             }
         }
-  return (
+  return (<DraggableResizableProvider value={{draggableProps}}>
     <div ref={divRef}
         className={classNames}
         style={{
@@ -432,9 +441,9 @@ export default function DraggableResizable({ children, ...props }: ComponentProp
                 }
             }}
         />
-        <div className={css.Body} {...draggableProps}>
+        <div className={css.Body}>
             {children}
         </div>
     </div>
-  )
+    </DraggableResizableProvider>)
 }
