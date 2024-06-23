@@ -1,0 +1,176 @@
+.DraggableResizable {
+    box-sizing: border-box;
+
+    display: grid;
+    /* grid-template-columns: 2px 2px auto 2px 2px;
+    grid-template-rows: 2px 2px auto 2px 2px; */
+    grid-template-columns: var( --border-width ) var( --border-width ) auto var( --border-width ) var( --border-width );
+    grid-template-rows: var( --border-width ) var( --border-width ) auto var( --border-width ) var( --border-width );
+    /* grid reference
+        v = vertices 
+        e = edges
+        b = body
+        
+        v v e v v
+        v b b b v
+        e b b b e
+        v b b b v
+        v v e v v
+    */
+
+    overflow: hidden;
+    position: relative;
+}
+
+/* vertices  */
+.verticeTopLeft{
+    /* top */
+    grid-row-start: 1;
+    grid-row-end: 2;
+    /* left */
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.verticeTopRight{
+    /* top */
+    grid-row-start: 1;
+    grid-row-end: 2;
+    /* right */
+    grid-column-start: 5;
+    grid-column-end: 6;
+}
+
+.verticeBottomLeft{
+    /* bottom  */
+    grid-row-start: 5;
+    grid-row-end: 6;
+    /* left */
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.verticeBottomRight{
+    /* bottom  */
+    grid-row-start: 5;
+    grid-row-end: 6;
+    /* right */
+    grid-column-start: 5;
+    grid-column-end: 6;
+}
+
+/* edges  */
+
+.edgeTop{
+    /* top */
+    grid-row-start: 1;
+    grid-row-end: 2;
+    /* horizontol edge */
+    grid-column-start: 3;
+    grid-column-end: 4;
+}
+.edgeBottom{
+    /* bottom  */
+    grid-row-start: 5;
+    grid-row-end: 6;
+    /* horizontol edge*/
+    grid-column-start: 3;
+    grid-column-end: 4;
+}
+.edgeRight{
+    /* verticle edge */
+    grid-row-start: 3;
+    grid-row-end: 4;
+    /* right */
+    grid-column-start: 5;
+    grid-column-end: 6;
+}
+.edgeLeft{
+    /* verticle edge */
+    grid-row-start: 3;
+    grid-row-end: 4;
+    /* left */
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+/* edge ends */
+
+.edgeTopLeft{
+    /* top */
+    grid-row-start: 1;
+    grid-row-end: 2;
+    /* horizontol left end */
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+.edgeTopRight{
+    /* top */
+    grid-row-start: 1;
+    grid-row-end: 2;
+    /* horizontol right end */
+    grid-column-start: 4;
+    grid-column-end: 5;
+}
+
+.edgeBottomLeft{
+    /* bottom  */
+    grid-row-start: 5;
+    grid-row-end: 6;
+    /* horizontol left end */
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+.edgeBottomRight{
+    /* bottom  */
+    grid-row-start: 5;
+    grid-row-end: 6;
+    /* horizontol right end */
+    grid-column-start: 4;
+    grid-column-end: 5;
+}
+
+.edgeLeftTop{
+    /* */
+    grid-row-start: 2;
+    grid-row-end: 3;
+    /* left */
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+.edgeLeftBottom{
+    /* */
+    grid-row-start: 4;
+    grid-row-end: 5;
+    /* left */
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+.edgeRightTop{
+    /* */
+    grid-row-start: 2;
+    grid-row-end: 3;
+    /* right */
+    grid-column-start: 5;
+    grid-column-end: 6;
+}
+.edgeRightBottom{
+    /* */
+    grid-row-start: 4;
+    grid-row-end: 5;
+    /* right */
+    grid-column-start: 5;
+    grid-column-end: 6;
+}
+
+/* Body  */
+.Body {
+    /* */
+    grid-row-start: 2;
+    grid-row-end: 5;
+    /* */
+    grid-column-start: 2;
+    grid-column-end: 5;
+}
