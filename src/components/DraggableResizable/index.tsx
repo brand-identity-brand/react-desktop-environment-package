@@ -114,7 +114,8 @@ export default function DraggableResizable({ children, ...props }: ComponentProp
                         left: mousePositionChange.left + onDragStartGridPositionRef.current.left,
                         top:  mousePositionChange.top + onDragStartGridPositionRef.current.top
                     }
-                    setGridPosition(nextPosition)
+                    setGridPosition(nextPosition);
+                    e.preventDefault();
                 }
             },
             onDragStart:(e)=>{inistialiseDrag(e)},

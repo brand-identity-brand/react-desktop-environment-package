@@ -33,9 +33,3 @@ export const FixedSize: Story = {
     </div>
   ),
 }
-
-// export const Resizable: Story = {
-//   args: {
-//     // lockResize: false,
-//   },
-// }
