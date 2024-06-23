@@ -1,6 +1,6 @@
 {
   "name": "react-desktop-environment",
-  "private": true,
+  "private": false,
   "version": "0.3.0",
   "type": "module",
   "files": ["dist"],
@@ -8,7 +8,7 @@
   "module": "./dist/main.js",
   "types": "./dist/main.d.ts",
   "scripts": {
-    "build": "tsc -b && vite build",
+    "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --ext ts,tsx --fix",
     "format": "prettier --check .",
@@ -19,9 +19,9 @@
     "build-storybook": "storybook build",
     "test": "vitest --ui",
     "coverage": "vitest run --coverage",
-     "prepublishOnly": "vitest run && npm run build"
+    "prepublishOnly": "vitest run && npm run build"
   },
-  "dependencies": {
+  "peerDependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
@@ -57,7 +57,7 @@
     "storybook": "^8.1.10",
     "stylelint": "^16.6.1",
     "stylelint-config-standard": "^36.0.1",
-    "typescript": "^5.2.2",
+    "typescript": "^5.4.5",
     "vite": "^5.3.1",
     "vite-plugin-dts": "^3.9.1",
     "vite-plugin-lib-inject-css": "^2.1.1",

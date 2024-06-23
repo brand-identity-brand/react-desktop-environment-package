@@ -13,7 +13,7 @@ export default defineConfig({
   plugins: [
     react(), 
     libInjectCss(),
-    dts({ exclude: ['**/*.stories.tsx', 'src/stories', 'src/test', '**/*.test.tsx'] })
+    dts({ exclude: ['**/*.stories.tsx', 'src/test', '**/*.test.tsx'] })
   ],
   build: {
     lib: {
