@@ -56,9 +56,8 @@
     grid-row-end: 6;
     /* right */
     grid-column-start: 5;
-    grid-column-end: 6;
+    grid-column-end: 6;  
 }
-
 /* edges  */
 
 .edgeTop{
@@ -148,6 +147,7 @@
     grid-column-start: 1;
     grid-column-end: 2;
 }
+
 .edgeRightTop{
     /* */
     grid-row-start: 2;
@@ -164,7 +164,18 @@
     grid-column-start: 5;
     grid-column-end: 6;
 }
-
+.verticeTopLeft, .verticeBottomRight, .edgeTopLeft,.edgeBottomRight, .edgeLeftTop, .edgeRightBottom {
+    cursor: nwse-resize;
+}
+.verticeTopRight, .verticeBottomLeft, .edgeTopRight, .edgeBottomLeft, .edgeLeftBottom, .edgeRightTop {
+    cursor: nesw-resize;
+}
+.edgeLeft, .edgeRight {
+    cursor: ew-resize;
+}
+.edgeTop, .edgeBottom {
+    cursor: ns-resize;
+}
 /* Body  */
 .Body {
     /* */

@@ -91,21 +91,30 @@ export default function DraggableResizable({ children, ...props }: ComponentProp
             initialiseOnDragStartGridPositionRef()
             initialiseOnDragStartGridSizeRef()
         }
-        function renderDrag(callback:()=>void):void{
-            if (
+        function checkIfDragReady():boolean{
+            return (
                 onDragStartGridPositionRef.current !== undefined 
                 && onDragStartGridSizeRef.current !== undefined 
                 && onDragStartGridSizeRef.current.width !== 'max'
                 && onDragStartGridSizeRef.current.height !== 'max'
-            ){
-                callback()
-            }
+            )
         }
         function endDrag():void{
             onDragStartMousePositionRef.current = undefined;
             onDragStartGridPositionRef.current = undefined;
         }
 
+        function dragToMove(e){
+            if ( checkIfDragReady() ){
+                const mousePositionChange = getOnDragMousePositionChange(e);
+                // position 
+                const nextPosition = {
+                    left: mousePositionChange.left + onDragStartGridPositionRef.current.left,
+                    top:  mousePositionChange.top + onDragStartGridPositionRef.current.top
+                }
+                setGridPosition(nextPosition)
+            }
+        }
   return (
     <div ref={divRef}
         className={classNames}
@@ -119,10 +128,9 @@ export default function DraggableResizable({ children, ...props }: ComponentProp
         } as DraggableResizableCSS}
     >
         {/* vertices */}
-        <Vertice className={css.verticeTopLeft} 
-            onDragStart={(e)=>{ inistialiseDrag(e)}}
+        <Border className={css.verticeTopLeft} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
             onDrag={(e)=>{
-                renderDrag( ()=>{
+                if ( checkIfDragReady() ){
                     const mousePositionChange = getOnDragMousePositionChange(e);
                     // position 
                     const nextPosition = {
@@ -136,12 +144,10 @@ export default function DraggableResizable({ children, ...props }: ComponentProp
                         height:  onDragStartGridSizeRef.current.height - mousePositionChange.top
                     }
                     setGridSize(nextSize)
-                })
+                }
             }}
-            onDragEnd={endDrag}
         />
-        <Vertice className={css.verticeTopRight}
-            onDragStart={(e)=>{inistialiseDrag(e)}}
+        <Border className={css.verticeTopRight} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
             onDrag={(e)=>{
                 if ( checkIfDragReady() ){
                     const mousePositionChange = getOnDragMousePositionChange(e);
@@ -159,43 +165,258 @@ export default function DraggableResizable({ children, ...props }: ComponentProp
                     setGridSize(nextSize)
                 }
             }}
-            onDragEnd={endDrag}
         />
-        <Vertice className={css.verticeBottomLeft}/>
-        <Vertice className={css.verticeBottomRight}/>
+        <Border className={css.verticeBottomLeft} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+            onDrag={(e)=>{
+                if ( checkIfDragReady() ){
+                    const mousePositionChange = getOnDragMousePositionChange(e);
+                    // position 
+                    const nextPosition = {
+                        left: mousePositionChange.left + onDragStartGridPositionRef.current.left,
+                        top:  onDragStartGridPositionRef.current.top
+                    }
+                    setGridPosition(nextPosition)
+                    // size 
+                    const nextSize = {
+                        width: onDragStartGridSizeRef.current.width - mousePositionChange.left,
+                        height: onDragStartGridSizeRef.current.height + mousePositionChange.top
+                    }
+                    setGridSize(nextSize)
+                }
+            }}
+        />
+        <Border className={css.verticeBottomRight} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+            onDrag={(e)=>{
+                if ( checkIfDragReady() ){
+                    const mousePositionChange = getOnDragMousePositionChange(e);
+                    // position 
+                    // postion doesnt change
+                    // size 
+                    const nextSize = {
+                        width: onDragStartGridSizeRef.current.width + mousePositionChange.left,
+                        height:  onDragStartGridSizeRef.current.height + mousePositionChange.top
+                    }
+                    setGridSize(nextSize)
+                }
+            }}
+        />
         {/* edges */}
-        {/* <Border className={css.edgeTop}/>
-        <Border className={css.edgeBottom}/>
-        <Border className={css.edgeLeft}/>
-        <Border className={css.edgeRight}/> */}
+        <Border className={css.edgeTop} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+            onDrag={(e)=>{
+                if ( checkIfDragReady() ){
+                    const mousePositionChange = getOnDragMousePositionChange(e);
+                    // position 
+                    const nextPosition = {
+                        left: onDragStartGridPositionRef.current.left,
+                        top:  onDragStartGridPositionRef.current.top + mousePositionChange.top
+                    }
+                    setGridPosition(nextPosition)
+                    // size 
+                    const nextSize = {
+                        width: onDragStartGridSizeRef.current.width,
+                        height:  onDragStartGridSizeRef.current.height - mousePositionChange.top
+                    }
+                    setGridSize(nextSize)
+                }
+            }}
+        />
+        <Border className={css.edgeBottom} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+            onDrag={(e)=>{
+                if ( checkIfDragReady() ){
+                    const mousePositionChange = getOnDragMousePositionChange(e);
+                    // position 
+                    // position unchanged
+                    // size 
+                    const nextSize = {
+                        width: onDragStartGridSizeRef.current.width,
+                        height:  onDragStartGridSizeRef.current.height + mousePositionChange.top
+                    }
+                    setGridSize(nextSize)
+                }
+            }}
+        />
+        <Border className={css.edgeLeft} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+            onDrag={(e)=>{
+                if ( checkIfDragReady() ){
+                    const mousePositionChange = getOnDragMousePositionChange(e);
+                    // position 
+                    const nextPosition = {
+                        left: mousePositionChange.left + onDragStartGridPositionRef.current.left,
+                        top:  onDragStartGridPositionRef.current.top
+                    }
+                    setGridPosition(nextPosition)
+                    // size 
+                    const nextSize = {
+                        width: onDragStartGridSizeRef.current.width - mousePositionChange.left,
+                        height:  onDragStartGridSizeRef.current.height
+                    }
+                    setGridSize(nextSize)
+                }
+            }}
+        />
+        <Border className={css.edgeRight} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+            onDrag={(e)=>{
+                if ( checkIfDragReady() ){
+                    const mousePositionChange = getOnDragMousePositionChange(e);
+                    // position 
+                    // position unchanged    
+                    // size 
+                    const nextSize = {
+                        width: onDragStartGridSizeRef.current.width + mousePositionChange.left,
+                        height:  onDragStartGridSizeRef.current.height
+                    }
+                    setGridSize(nextSize)
+                }
+            }}
+        />
         {/* edge ends */}
-        {/* <Border className={css.edgeTopLeft}/>
-        <Border className={css.edgeTopRight}/>
-        <Border className={css.edgeBottomLeft}/>
-        <Border className={css.edgeBottomRight}/>
-        <Border className={css.edgeLeftTop}/>
-        <Border className={css.edgeLeftBottom}/>
-        <Border className={css.edgeRightTop}/>
-        <Border className={css.edgeRightBottom}/> */}
+        <Border className={css.edgeTopLeft} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+            onDrag={(e)=>{
+                if ( checkIfDragReady() ){
+                    const mousePositionChange = getOnDragMousePositionChange(e);
+                    // position 
+                    const nextPosition = {
+                        left: mousePositionChange.left + onDragStartGridPositionRef.current.left,
+                        top:  mousePositionChange.top + onDragStartGridPositionRef.current.top
+                    }
+                    setGridPosition(nextPosition)
+                    // size 
+                    const nextSize = {
+                        width: onDragStartGridSizeRef.current.width - mousePositionChange.left,
+                        height:  onDragStartGridSizeRef.current.height - mousePositionChange.top
+                    }
+                    setGridSize(nextSize)
+                }
+            }}
+        />
+        <Border className={css.edgeTopRight} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+            onDrag={(e)=>{
+                if ( checkIfDragReady() ){
+                    const mousePositionChange = getOnDragMousePositionChange(e);
+                    // position 
+                    const nextPosition = {
+                        left: onDragStartGridPositionRef.current.left,
+                        top:  mousePositionChange.top + onDragStartGridPositionRef.current.top
+                    }
+                    setGridPosition(nextPosition)
+                    // size 
+                    const nextSize = {
+                        width: onDragStartGridSizeRef.current.width + mousePositionChange.left,
+                        height:  onDragStartGridSizeRef.current.height - mousePositionChange.top
+                    }
+                    setGridSize(nextSize)
+                }
+            }}
+        />
+        <Border className={css.edgeBottomLeft} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+            onDrag={(e)=>{
+                if ( checkIfDragReady() ){
+                    const mousePositionChange = getOnDragMousePositionChange(e);
+                    // position 
+                    const nextPosition = {
+                        left: mousePositionChange.left + onDragStartGridPositionRef.current.left,
+                        top:  onDragStartGridPositionRef.current.top
+                    }
+                    setGridPosition(nextPosition)
+                    // size 
+                    const nextSize = {
+                        width: onDragStartGridSizeRef.current.width - mousePositionChange.left,
+                        height: onDragStartGridSizeRef.current.height + mousePositionChange.top
+                    }
+                    setGridSize(nextSize)
+                }
+            }}
+        />
+        <Border className={css.edgeBottomRight} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+            onDrag={(e)=>{
+                if ( checkIfDragReady() ){
+                    const mousePositionChange = getOnDragMousePositionChange(e);
+                    // position 
+                    // postion doesnt change
+                    // size 
+                    const nextSize = {
+                        width: onDragStartGridSizeRef.current.width + mousePositionChange.left,
+                        height:  onDragStartGridSizeRef.current.height + mousePositionChange.top
+                    }
+                    setGridSize(nextSize)
+                }
+            }}
+        />
+        <Border className={css.edgeLeftTop} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+            onDrag={(e)=>{
+                if ( checkIfDragReady() ){
+                    const mousePositionChange = getOnDragMousePositionChange(e);
+                    // position 
+                    const nextPosition = {
+                        left: mousePositionChange.left + onDragStartGridPositionRef.current.left,
+                        top:  mousePositionChange.top + onDragStartGridPositionRef.current.top
+                    }
+                    setGridPosition(nextPosition)
+                    // size 
+                    const nextSize = {
+                        width: onDragStartGridSizeRef.current.width - mousePositionChange.left,
+                        height:  onDragStartGridSizeRef.current.height - mousePositionChange.top
+                    }
+                    setGridSize(nextSize)
+                }
+            }}
+        />
+        <Border className={css.edgeLeftBottom} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+            onDrag={(e)=>{
+                if ( checkIfDragReady() ){
+                    const mousePositionChange = getOnDragMousePositionChange(e);
+                    // position 
+                    const nextPosition = {
+                        left: mousePositionChange.left + onDragStartGridPositionRef.current.left,
+                        top:  onDragStartGridPositionRef.current.top
+                    }
+                    setGridPosition(nextPosition)
+                    // size 
+                    const nextSize = {
+                        width: onDragStartGridSizeRef.current.width - mousePositionChange.left,
+                        height: onDragStartGridSizeRef.current.height + mousePositionChange.top
+                    }
+                    setGridSize(nextSize)
+                }
+            }}
+        />
+        <Border className={css.edgeRightTop} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+            onDrag={(e)=>{
+                if ( checkIfDragReady() ){
+                    const mousePositionChange = getOnDragMousePositionChange(e);
+                    // position 
+                    const nextPosition = {
+                        left: onDragStartGridPositionRef.current.left,
+                        top:  mousePositionChange.top + onDragStartGridPositionRef.current.top
+                    }
+                    setGridPosition(nextPosition)
+                    // size 
+                    const nextSize = {
+                        width: onDragStartGridSizeRef.current.width + mousePositionChange.left,
+                        height:  onDragStartGridSizeRef.current.height - mousePositionChange.top
+                    }
+                    setGridSize(nextSize)
+                }
+            }}
+        />
+        <Border className={css.edgeRightBottom} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+            onDrag={(e)=>{
+                if ( checkIfDragReady() ){
+                    const mousePositionChange = getOnDragMousePositionChange(e);
+                    // position 
+                    // postion doesnt change
+                    // size 
+                    const nextSize = {
+                        width: onDragStartGridSizeRef.current.width + mousePositionChange.left,
+                        height:  onDragStartGridSizeRef.current.height + mousePositionChange.top
+                    }
+                    setGridSize(nextSize)
+                }
+            }}
+        />
         <main className={css.Body}>
             {children}
         </main>
     </div>
   )
-}
-
-function Vertice({
-    className, 
-    onDragStart,
-    onDrag,
-    onDragEnd
-}:{
-    className: string,
-    onDragStart:  (e: DragEvent<HTMLDivElement>) => void,
-    onDrag:  (e: DragEvent<HTMLDivElement>) => void,
-    onDragEnd: (e: DragEvent<HTMLDivElement>) => void,
-}){
-    return (
-        <Border className={className} onDragStart={onDragStart} onDrag={onDrag} onDragEnd={onDragEnd}/>
-    )
 }
