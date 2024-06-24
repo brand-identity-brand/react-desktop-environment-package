@@ -1,12 +1,14 @@
 import css from './index.module.css'
 import clsx from 'clsx'
 import { useRef, useState, createContext } from 'react';
-import type {CSSProperties, DragEvent} from 'react';
+import type {CSSProperties, DragEvent, PropsWithChildren} from 'react';
 import { Border } from './Border';
 
 export const DraggableResizableContext = createContext(null);
-
-function  DraggableResizableProvider({children,value}){
+interface  DraggableResizableProviderProps extends PropsWithChildren {
+    value: any;
+}
+function  DraggableResizableProvider({children,value}:DraggableResizableProviderProps){
     return (
         <DraggableResizableContext.Provider value={value}>
             {children}
@@ -26,7 +28,7 @@ interface Size {
     height: number | 'max';
 }
 
-interface ComponentProps extends React.ComponentProps<'div'> {
+interface DraggableResizableProps extends React.ComponentProps<'div'> {
     /**
      * border width in px
      */
@@ -41,7 +43,7 @@ interface ComponentProps extends React.ComponentProps<'div'> {
     initialSize: Size;
 }
 
-export default function DraggableResizable({ children, ...props }: ComponentProps) {
+export default function DraggableResizable({ children, ...props }: DraggableResizableProps) {
     const {
         windowBorderWidth = 2,
         initialPosition = {
@@ -115,7 +117,7 @@ export default function DraggableResizable({ children, ...props }: ComponentProp
 
         const draggableProps = {
             draggable: true,
-            onDrag:(e)=>{            
+            onDrag:(e: DragEvent<HTMLElement>)=>{            
                 if ( checkIfDragReady() ){
                     const mousePositionChange = getOnDragMousePositionChange(e);
                     // position 
@@ -127,17 +129,17 @@ export default function DraggableResizable({ children, ...props }: ComponentProp
                     e.preventDefault();
                 }
             },
-            onDragStart:(e)=>{inistialiseDrag(e)},
+            onDragStart:(e: DragEvent<HTMLElement>)=>{inistialiseDrag(e)},
             // below deoesnt affect behaviour, but performance increases
-            onDragLeave:(e)=>{
+            onDragLeave:(e: DragEvent<HTMLElement>)=>{
                 // prevent dragImage flyover when dropping
                 e.preventDefault();
             },
-            onDragOver:(e)=>{
+            onDragOver:(e: DragEvent<HTMLElement>)=>{
                 // prevent dragImage flyover when dropping
                 e.preventDefault();
             },
-            onDragEnd:(e)=>{
+            onDragEnd:(e: DragEvent<HTMLElement>)=>{
                 endDrag();
                 e.preventDefault();
             }
