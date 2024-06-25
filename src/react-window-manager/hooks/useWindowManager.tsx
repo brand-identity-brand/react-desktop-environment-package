@@ -27,7 +27,7 @@ export default function useWindowManager(windowId:WindowId){
         return active.map( childWindowId => {
             const childWindowSpec = windowSpecsRef.current[childWindowId];
             const { componentName, props } =childWindowSpec;
-            return renderWindow( childWindowId, components[componentName], props);
+            return renderWindow( childWindowId, components[componentName], {windowId: childWindowId, ...props});
         });
     }
 

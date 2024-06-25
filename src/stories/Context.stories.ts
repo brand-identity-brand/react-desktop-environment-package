@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import Desktop from '../components/Desktop';
+import Desktop, {Desktop2} from '../components/Desktop';
 import DraggableResizable from '../components/DraggableResizable';
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta: Meta<typeof Desktop> = {
@@ -8,32 +8,38 @@ const meta: Meta<typeof Desktop> = {
   component: Desktop,
 
   parameters: {
-    layout: 'centered',
     storyType: 'withRWM', 
     sessionWindowSpecs: {
       '1': { 
-          componentName: "DraggableResizable",
+          componentName: "Desktop",
           props:{
             windowBorderWidth: 10,
-            
+            initialSize: {
+              width: 500,
+              height: 500
+            }
           },
-          windows:{active:['2', '3'],hidden:[],closed:[]},
+          windows:{active:['2'],hidden:[],closed:[]},
           registeredIn:[] 
       },
       '2': { 
-        componentName: "DraggableResizable",
+        componentName: "Desktop2",
         props:{
           windowBorderWidth: 5,
           initialPosition: {
             top: 25,
             left: 50
+          },
+          initialSize: {
+            width: 300,
+            height: 300
           }
         },
-        windows:{active:[],hidden:[],closed:[]},
+        windows:{active:['3'],hidden:[],closed:[]},
         registeredIn:[] 
       },
       '3':{ 
-        componentName: "DraggableResizable",
+        componentName: "Desktop2",
         props:{
           windowBorderWidth: 2,
           initialPosition: {
@@ -46,7 +52,8 @@ const meta: Meta<typeof Desktop> = {
       }
     }, 
     components: {
-      "DraggableResizable": DraggableResizable
+      "DraggableResizable": DraggableResizable,
+      "Desktop2": Desktop2
     }
   },
   tags: ['autodocs'],
@@ -55,7 +62,12 @@ const meta: Meta<typeof Desktop> = {
   // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
   ////args: { onClick: fn() },
   args:{
-    windowId:'1'
+    windowId:'1',
+    windowBorderWidth: 10,
+    initialSize: {
+      width: 500,
+      height: 500
+    }
   }
 };
 

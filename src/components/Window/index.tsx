@@ -1,7 +1,10 @@
 import css from "./index.module.css";
 import DraggableResizable from "../DraggableResizable";
+import { useContext } from "react";
 
-export default function Window(props){
+export default function Window({...props}){
+    const { draggableProps, windowId}  = props;
+console.log(windowId)
     return (
         <DraggableResizable>
             <div className={css.Window}>

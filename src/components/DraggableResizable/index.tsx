@@ -1,20 +1,10 @@
 import css from './index.module.css'
 import clsx from 'clsx'
-import { useRef, useState, createContext } from 'react';
+import { useRef, useState, cloneElement } from 'react';
 import type {CSSProperties, DragEvent, PropsWithChildren} from 'react';
 import { Border } from './Border';
+// TODO: type for context
 
-export const DraggableResizableContext = createContext(null);
-interface  DraggableResizableProviderProps extends PropsWithChildren {
-    value: any;
-}
-function  DraggableResizableProvider({children,value}:DraggableResizableProviderProps){
-    return (
-        <DraggableResizableContext.Provider value={value}>
-            {children}
-        </DraggableResizableContext.Provider>
-    )
-}
 export interface DraggableResizableCSS extends CSSProperties {
     '--border-width': string;
 }
@@ -27,8 +17,8 @@ interface Size {
     width: number | 'max';
     height: number | 'max';
 }
-
-interface DraggableResizableProps extends React.ComponentProps<'div'> {
+// React.ComponentProps<'div'> extends 
+interface DraggableResizableProps extends React.ComponentProps<'div'> {//React.PropsWithChildren {
     /**
      * border width in px
      */
@@ -144,7 +134,7 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
                 e.preventDefault();
             }
         }
-  return (<DraggableResizableProvider value={{draggableProps}}>
+  return (
     <div ref={divRef}
         className={classNames}
         style={{
@@ -444,10 +434,10 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
             }}
         />
         <div className={css.Body}>
-            {children}
+            {cloneElement(children, {draggableProps})}
         </div>
     </div>
-    </DraggableResizableProvider>)
+    )
 }
 
 // DraggableResizable.displayName = "DraggableResizable"
