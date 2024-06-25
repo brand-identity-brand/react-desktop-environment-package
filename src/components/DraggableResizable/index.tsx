@@ -434,7 +434,7 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
             }}
         />
         <div className={css.Body}>
-            { //https://react.dev/reference/react/cloneElement
+            {/* { //https://react.dev/reference/react/cloneElement
                 Children.map(children, (child, index) => {
                     switch (typeof child){
                         //TODO: 
@@ -442,7 +442,7 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
                         default: return cloneElement(child, {draggableProps})
                     }
                 })
-            }
+            } */}
         </div>
     </div>
     )
