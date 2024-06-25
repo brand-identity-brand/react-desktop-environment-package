@@ -20,6 +20,8 @@
 
     overflow: hidden;
     position: absolute;
+
+    background-color: white;
 }
 
 /* vertices  */

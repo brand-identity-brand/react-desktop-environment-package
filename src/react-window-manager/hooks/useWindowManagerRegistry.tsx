@@ -12,14 +12,14 @@ import { useState, useRef } from "react";
 // 		states: {}
 // 	}
 // }
-type WindowId = PropertyKey; //String only
-type Windows = {
+export type WindowId = string & React.Key & PropertyKey; //! actually only string will be assigned. 
+export type Windows = {
     active: WindowId[];
     hidden: WindowId[];
     closed: WindowId[];
 };
 interface WindowSpecs {
-    ComponentName: String;
+    componentName: string;
     props: Object;
     // states:{},
     windows: Windows,
@@ -28,7 +28,7 @@ interface WindowSpecs {
 export type SessionWindowSpecs = Record<WindowId, WindowSpecs>;
 
 const emptyWindowSpecs: WindowSpecs = { 
-    ComponentName:'',
+    componentName:'',
     props:{},
     // states:{},
     windows:{active:[],hidden:[],closed:[]},
@@ -47,6 +47,7 @@ export default function useWindowManagerRegistry(sessionWindowSpecs: SessionWind
         }
     }
     return {
+        windowSpecsRef,
         initWindow,
     }
 }

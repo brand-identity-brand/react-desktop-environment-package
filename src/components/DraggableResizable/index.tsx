@@ -449,3 +449,5 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
     </div>
     </DraggableResizableProvider>)
 }
+
+// DraggableResizable.displayName = "DraggableResizable"
