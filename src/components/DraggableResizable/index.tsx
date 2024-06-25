@@ -1,6 +1,6 @@
 import css from './index.module.css'
 import clsx from 'clsx'
-import { useRef, useState, cloneElement } from 'react';
+import { useRef, useState, cloneElement, Children } from 'react';
 import type {CSSProperties, DragEvent, PropsWithChildren} from 'react';
 import { Border } from './Border';
 // TODO: type for context
@@ -434,7 +434,15 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
             }}
         />
         <div className={css.Body}>
-            {cloneElement(children, {draggableProps})}
+            { //https://react.dev/reference/react/cloneElement
+                Children.map(children, (child, index) => {
+                    switch (typeof child){
+                        //TODO: 
+                        case 'string': return child;
+                        default: return cloneElement(child, {draggableProps})
+                    }
+                })
+            }
         </div>
     </div>
     )

@@ -27,7 +27,7 @@ export function Desktop2({windowId , ...props}){
         // <WindowManagerProvider windowId={windowId}>
 
             <DraggableResizable  {...props}>
-               { windowId}
+               {/* { windowId} */}
                 { renderChildrenWindows() }
             </DraggableResizable>
 

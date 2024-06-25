@@ -4,11 +4,14 @@ import { useContext } from "react";
 
 export default function Window({...props}){
     const { draggableProps, windowId}  = props;
-console.log(windowId)
+    
     return (
-        <DraggableResizable>
+        <DraggableResizable initialPosition ={
+            {left: 100,
+            top: 100}
+        }>
             <div className={css.Window}>
-                <div className={css.WindowHeader}>
+                <div className={css.WindowHeader} {...draggableProps}>
                     a
                 </div>
                 <div>
