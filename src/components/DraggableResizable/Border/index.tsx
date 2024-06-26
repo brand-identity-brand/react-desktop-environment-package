@@ -26,22 +26,32 @@ export function Border({ className, ...props }: ComponentProps) {
       className={style}
       onDragStart={(e: DragEvent<HTMLElement>): void=>{
         onDragStart(e);
+        e.stopPropagation();
+        // e.stopImmidiatePropagation()
       }}
       onDrag={(e: DragEvent<HTMLElement>): void=>{
         onDrag(e);
+        e.stopPropagation();
+
       }}
       // below increase performance and avoids unwanted event firing at the end
       onDragLeave={(e)=>{
           // prevent dragImage flyover when dropping
           e.preventDefault();
+          e.stopPropagation();
+
       }}
       onDragOver={(e)=>{
           // prevent dragImage flyover when dropping
           e.preventDefault();
+          e.stopPropagation();
+
       }}
       onDragEnd={(e)=>{
         onDragEnd(e);
           e.preventDefault();
+          e.stopPropagation();
+
       }}
     >
     </div>

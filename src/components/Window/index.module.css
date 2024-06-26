@@ -12,4 +12,18 @@
 
     background-color: black;
     color: white;
+
+    /* layout  */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.WindowTitle{
+    background-color: green;
+    color: white;
+}
+.WindowController{
+    background-color: blue;
+    color: white;
 }

@@ -27,7 +27,7 @@ const meta: Meta<typeof Desktop> = {
         props:{
           windowBorderWidth: 5,
           initialPosition: {
-            top: 25,
+            top: 250,
             left: 50
           },
           initialSize: {

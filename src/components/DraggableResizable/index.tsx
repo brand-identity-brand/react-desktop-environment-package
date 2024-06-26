@@ -31,6 +31,8 @@ interface DraggableResizableProps extends React.ComponentProps<'div'> {//React.P
      * Size it first rendered as
      */
     initialSize: Size;
+
+    render(draggableProps:any): React.ReactNode;
 }
 
 export default function DraggableResizable({ children, ...props }: DraggableResizableProps) {
@@ -44,6 +46,7 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
             width: 100,
             height: 100
         },
+        render
     } = props;
     const classNames = clsx(
         css.DraggableResizable, 
@@ -139,6 +142,7 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
         className={classNames}
         style={{
             "--border-width": `${windowBorderWidth}px`,
+            // "--border-colour": 'red',
             // ...style,
             top: `${gridPosition.top}px`,
             left: `${gridPosition.left}px`,
@@ -434,15 +438,19 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
             }}
         />
         <div className={css.Body}>
-            {/* { //https://react.dev/reference/react/cloneElement
-                Children.map(children, (child, index) => {
-                    switch (typeof child){
-                        //TODO: 
-                        case 'string': return child;
-                        default: return cloneElement(child, {draggableProps})
-                    }
-                })
-            } */}
+            { //https://react.dev/reference/react/cloneElement
+                // Children.map(children, (child, index) => {
+                //     switch (typeof child){
+                //         //TODO: 
+                //         case 'string': return child;
+                //         case 'number': return child;
+                //         case 'boolean': return child;
+                //         default: return cloneElement(child, {...draggableProps})
+                //     }
+                // })
+            }
+            {/* {children} */}
+            {render(draggableProps)}
         </div>
     </div>
     )
