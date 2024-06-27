@@ -11,7 +11,7 @@ const buttons = {
     expanded: <span className={`material-symbols-outlined rde-material-symbols-outlined ${css.expanded_span}`}>{ 'equal' }</span>
 }
 
-interface WindowControllerButtonProps extends HTMLButtonElement {
+interface WindowControllerButtonProps extends React.ComponentPropsWithoutRef<'button'> {
     controllerType: "minimise" | 'fullscreenExit' | 'fullscreen' | 'close' | 'collapsed' | 'expanded';
     onClick?(e:React.MouseEvent<HTMLElement>): void;
 }

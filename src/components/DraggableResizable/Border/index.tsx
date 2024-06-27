@@ -3,14 +3,13 @@ import css from './index.module.css'
 import clsx from 'clsx'
 import type { DragEvent } from 'react'
 
-interface ComponentProps extends React.ComponentProps<'div'> {
-  className: string,
+interface ComponentProps extends React.ComponentPropsWithoutRef<'div'> {
   onDragStart: (e: DragEvent<HTMLElement>) => void,
   onDrag: (e: DragEvent<HTMLElement>) => void,
   onDragEnd: (e: DragEvent<HTMLElement>) => void,
 }
 
-export function Border({ className, ...props }: ComponentProps) {
+export function Border({ className, draggable,...props }: ComponentProps) {
   const {
     onDragStart,
     onDrag,
@@ -26,7 +25,7 @@ export function Border({ className, ...props }: ComponentProps) {
 // https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/dropEffect
 return (
     <div
-      draggable={true}
+      draggable={draggable}
       className={style}
       onDragStart={(e: DragEvent<HTMLElement>): void=>{
         onDragStart(e);
