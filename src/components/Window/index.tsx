@@ -19,15 +19,15 @@ export default function Window({children,...props}){
                         <div className={css.Window}>
                             <div className={css.WindowHeader} {...draggableProps}>
                                 <div className={css.WindowController}>
-                                    <WindowControllerButton type={"expanded"}/>
+                                    <WindowControllerButton controllerType={"expanded"}/>
                                 </div>
                                 <div className={css.WindowTitle}>
                                     {title}
                                 </div>
                                 <div className={css.WindowController}>
-                                    <WindowControllerButton type={"minimise"}/>
-                                    <WindowControllerButton type={"fullscreen"}/>
-                                    <WindowControllerButton type={"close"}/>
+                                    <WindowControllerButton controllerType={"minimise"}/>
+                                    <WindowControllerButton controllerType={"fullscreen"}/>
+                                    <WindowControllerButton controllerType={"close"}/>
                                 </div>
                             </div>
                             <div>

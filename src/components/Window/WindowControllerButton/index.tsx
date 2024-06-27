@@ -12,15 +12,15 @@ const buttons = {
 }
 
 interface WindowControllerButtonProps extends HTMLButtonElement {
-    type: 'minimise' | 'fullscreenExit' | 'fullscreen' | 'close' | 'collapsed' | 'expanded';
+    controllerType: "minimise" | 'fullscreenExit' | 'fullscreen' | 'close' | 'collapsed' | 'expanded';
     onClick?(e:React.MouseEvent<HTMLElement>): void;
 }
-export default function WindowControllerButton({type, onClick}: WindowControllerButtonProps){
+export default function WindowControllerButton({controllerType, onClick}: WindowControllerButtonProps){
     return (
         <button className={css.WindowControllerButton+' '+'rde-unselectable'}
             onClick={(e)=>{ onClick && onClick(e); }}
         > 
-            {buttons[type]}
+            {buttons[controllerType]}
         </button>
     )
 }

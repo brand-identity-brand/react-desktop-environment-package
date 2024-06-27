@@ -20,6 +20,10 @@ interface Size {
 // React.ComponentProps<'div'> extends 
 interface DraggableResizableProps extends React.ComponentProps<'div'> {//React.PropsWithChildren {
     /**
+     * 
+     */
+    draggable: boolean;
+    /**
      * border width in px
      */
     windowBorderWidth: Number
@@ -37,6 +41,7 @@ interface DraggableResizableProps extends React.ComponentProps<'div'> {//React.P
 
 export default function DraggableResizable({ children, ...props }: DraggableResizableProps) {
     const {
+        draggable = true,
         windowBorderWidth = 2,
         initialPosition = {
             left: 10,
@@ -55,6 +60,8 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
 
     const [ gridPosition, setGridPosition ] = useState(initialPosition);
     const [ gridSize, setGridSize ] = useState(initialSize);
+
+    const isDraggableRef = useRef(draggable);
     /**
         * mouse position relative to browser viewport: e.clientX,  e.clientY
      */
@@ -110,7 +117,10 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
 
         const draggableProps = {
             draggable: true,
-            onDrag:(e: DragEvent<HTMLElement>)=>{            
+            onDrag:(e: DragEvent<HTMLElement>)=>{        
+                const dragImg = document.createElement("div");
+                dragImg.setAttribute("src", "data:image/png;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7")
+                e.dataTransfer.setDragImage(dragImg, 0, 0);    
                 if ( checkIfDragReady() ){
                     const mousePositionChange = getOnDragMousePositionChange(e);
                     // position 
@@ -137,6 +147,16 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
                 e.preventDefault();
             }
         }
+
+        const controllers = {
+            function maximise(){
+                isDraggableRef.current = false;
+            }
+            function unmaximise(){
+                isDraggableRef.current = true;
+            }
+        }
+
   return (
     <div ref={divRef}
         className={classNames}
@@ -151,7 +171,7 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
         } as DraggableResizableCSS}
     >
         {/* vertices */}
-        <Border className={css.verticeTopLeft} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+        <Border draggable={isDraggableRef.current} className={css.verticeTopLeft} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
             onDrag={(e)=>{
                 if ( checkIfDragReady() ){
                     const mousePositionChange = getOnDragMousePositionChange(e);
@@ -171,7 +191,7 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
                 }
             }}
         />
-        <Border className={css.verticeTopRight} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+        <Border draggable={isDraggableRef.current} className={css.verticeTopRight} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
             onDrag={(e)=>{
                 if ( checkIfDragReady() ){
                     const mousePositionChange = getOnDragMousePositionChange(e);
@@ -190,7 +210,7 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
                 }
             }}
         />
-        <Border className={css.verticeBottomLeft} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+        <Border draggable={isDraggableRef.current} className={css.verticeBottomLeft} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
             onDrag={(e)=>{
                 if ( checkIfDragReady() ){
                     const mousePositionChange = getOnDragMousePositionChange(e);
@@ -209,7 +229,7 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
                 }
             }}
         />
-        <Border className={css.verticeBottomRight} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+        <Border draggable={isDraggableRef.current} className={css.verticeBottomRight} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
             onDrag={(e)=>{
                 if ( checkIfDragReady() ){
                     const mousePositionChange = getOnDragMousePositionChange(e);
@@ -225,7 +245,7 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
             }}
         />
         {/* edges */}
-        <Border className={css.edgeTop} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+        <Border draggable={isDraggableRef.current} className={css.edgeTop} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
             onDrag={(e)=>{
                 if ( checkIfDragReady() ){
                     const mousePositionChange = getOnDragMousePositionChange(e);
@@ -244,7 +264,7 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
                 }
             }}
         />
-        <Border className={css.edgeBottom} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+        <Border draggable={isDraggableRef.current} className={css.edgeBottom} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
             onDrag={(e)=>{
                 if ( checkIfDragReady() ){
                     const mousePositionChange = getOnDragMousePositionChange(e);
@@ -259,7 +279,7 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
                 }
             }}
         />
-        <Border className={css.edgeLeft} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+        <Border draggable={isDraggableRef.current} className={css.edgeLeft} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
             onDrag={(e)=>{
                 if ( checkIfDragReady() ){
                     const mousePositionChange = getOnDragMousePositionChange(e);
@@ -278,7 +298,7 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
                 }
             }}
         />
-        <Border className={css.edgeRight} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+        <Border draggable={isDraggableRef.current} className={css.edgeRight} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
             onDrag={(e)=>{
                 if ( checkIfDragReady() ){
                     const mousePositionChange = getOnDragMousePositionChange(e);
@@ -294,7 +314,7 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
             }}
         />
         {/* edge ends */}
-        <Border className={css.edgeTopLeft} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+        <Border draggable={isDraggableRef.current} className={css.edgeTopLeft} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
             onDrag={(e)=>{
                 if ( checkIfDragReady() ){
                     const mousePositionChange = getOnDragMousePositionChange(e);
@@ -313,7 +333,7 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
                 }
             }}
         />
-        <Border className={css.edgeTopRight} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+        <Border draggable={isDraggableRef.current} className={css.edgeTopRight} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
             onDrag={(e)=>{
                 if ( checkIfDragReady() ){
                     const mousePositionChange = getOnDragMousePositionChange(e);
@@ -332,7 +352,7 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
                 }
             }}
         />
-        <Border className={css.edgeBottomLeft} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+        <Border draggable={isDraggableRef.current} className={css.edgeBottomLeft} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
             onDrag={(e)=>{
                 if ( checkIfDragReady() ){
                     const mousePositionChange = getOnDragMousePositionChange(e);
@@ -351,7 +371,7 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
                 }
             }}
         />
-        <Border className={css.edgeBottomRight} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+        <Border draggable={isDraggableRef.current} className={css.edgeBottomRight} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
             onDrag={(e)=>{
                 if ( checkIfDragReady() ){
                     const mousePositionChange = getOnDragMousePositionChange(e);
@@ -366,7 +386,7 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
                 }
             }}
         />
-        <Border className={css.edgeLeftTop} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+        <Border draggable={isDraggableRef.current} className={css.edgeLeftTop} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
             onDrag={(e)=>{
                 if ( checkIfDragReady() ){
                     const mousePositionChange = getOnDragMousePositionChange(e);
@@ -385,7 +405,7 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
                 }
             }}
         />
-        <Border className={css.edgeLeftBottom} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+        <Border draggable={isDraggableRef.current} className={css.edgeLeftBottom} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
             onDrag={(e)=>{
                 if ( checkIfDragReady() ){
                     const mousePositionChange = getOnDragMousePositionChange(e);
@@ -404,7 +424,7 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
                 }
             }}
         />
-        <Border className={css.edgeRightTop} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+        <Border draggable={isDraggableRef.current} className={css.edgeRightTop} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
             onDrag={(e)=>{
                 if ( checkIfDragReady() ){
                     const mousePositionChange = getOnDragMousePositionChange(e);
@@ -423,7 +443,7 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
                 }
             }}
         />
-        <Border className={css.edgeRightBottom} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
+        <Border draggable={isDraggableRef.current} className={css.edgeRightBottom} onDragStart={(e)=>{inistialiseDrag(e)}} onDragEnd={endDrag}
             onDrag={(e)=>{
                 if ( checkIfDragReady() ){
                     const mousePositionChange = getOnDragMousePositionChange(e);
