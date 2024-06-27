@@ -1,9 +1,14 @@
+import "../global.css";
 import css from "./index.module.css";
 import DraggableResizable from "../DraggableResizable";
 import { useContext } from "react";
+import WindowControllerButton from "./WindowControllerButton";
 
 export default function Window({children,...props}){
-    const { windowId}  = props;
+    const { 
+        windowId, 
+        title = 'Example Title For Window'
+    }  = props;
 
     return (
         <DraggableResizable
@@ -14,20 +19,19 @@ export default function Window({children,...props}){
                         <div className={css.Window}>
                             <div className={css.WindowHeader} {...draggableProps}>
                                 <div className={css.WindowController}>
-                                    1
+                                    <WindowControllerButton type={"expanded"}/>
                                 </div>
                                 <div className={css.WindowTitle}>
-                                    Example Title For Window
+                                    {title}
                                 </div>
                                 <div className={css.WindowController}>
-                                    123
+                                    <WindowControllerButton type={"minimise"}/>
+                                    <WindowControllerButton type={"fullscreen"}/>
+                                    <WindowControllerButton type={"close"}/>
                                 </div>
                             </div>
                             <div>
                                 {children}
-                            </div>
-                            <div>
-                                c
                             </div>
                         </div>
                     )

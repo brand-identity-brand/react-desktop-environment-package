@@ -7,7 +7,8 @@ const meta = {
   title: 'Components/DraggbleResizable',
   component: DraggbleResizable,
   parameters: {
-    layout: 'centered',
+    layout: 'fullscreen',
+    // storyType: 
   },
   tags: ['autodocs'],
   // this is props
@@ -26,10 +27,10 @@ export const FixedSize: Story = {
     // lockResize: true,
   },
   render: (args) => (
-    <div style={{width: '500px', height: '500px', boxSizing: "border-box"}}>
+    // <div style={{width: '500px', height: '500px', boxSizing: "border-box"}}>
       <DraggbleResizable {...args}>
         <div>test</div>
       </DraggbleResizable>
-    </div>
+    // </div>
   ),
 }

@@ -32,7 +32,7 @@ interface DraggableResizableProps extends React.ComponentProps<'div'> {//React.P
      */
     initialSize: Size;
 
-    render(draggableProps:any): React.ReactNode;
+    render: (draggableProps:any)=>React.ReactNode | undefined;
 }
 
 export default function DraggableResizable({ children, ...props }: DraggableResizableProps) {
@@ -155,6 +155,7 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
             onDrag={(e)=>{
                 if ( checkIfDragReady() ){
                     const mousePositionChange = getOnDragMousePositionChange(e);
+                    console.log(mousePositionChange)
                     // position 
                     const nextPosition = {
                         left: mousePositionChange.left + onDragStartGridPositionRef.current.left,
@@ -449,8 +450,12 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
                 //     }
                 // })
             }
-            {/* {children} */}
-            {render(draggableProps)}
+            {/* {children}
+            {render(draggableProps)} */}
+            { render === undefined 
+                ? children
+                :render(draggableProps)
+            }
         </div>
     </div>
     )

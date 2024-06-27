@@ -1,4 +1,5 @@
 .Window {
+    box-sizing: border-box;
     width: 100%;
     height: 100%;
     /* layout  */
@@ -7,12 +8,13 @@
 }
 
 .WindowHeader {
+    box-sizing: border-box;
     width: 100%;
     height: 20px;
 
     background-color: black;
     color: white;
-
+    border-bottom: 2px solid black;
     /* layout  */
     display: flex;
     flex-direction: row;
@@ -20,10 +22,22 @@
 }
 
 .WindowTitle{
-    background-color: green;
+    box-sizing: border-box;
+    /* background-color: green; */
     color: white;
 }
 .WindowController{
-    background-color: blue;
-    color: white;
+    box-sizing: border-box;
+    background-color: white;
+    /* color: black; */
+
+
+    height: 100%;
+    /* layout */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2px;
+    padding: 2px; 
 }

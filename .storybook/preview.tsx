@@ -47,7 +47,12 @@ const preview: Preview = {
         //     </div>
         //   )
         default:
-          return <Story/>
+          return (
+            <div style={{width: "100%", height: "1080px",backgroundColor: "grey"}}>
+              <Story/>
+            </div>
+            
+        )
       }
     },
   ]
