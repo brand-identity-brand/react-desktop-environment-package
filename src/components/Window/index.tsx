@@ -1,13 +1,22 @@
 import "../global.css";
 import css from "./index.module.css";
 import DraggableResizable from "../DraggableResizable";
+import type { DraggableResizableProps } from "../DraggableResizable"
+import type { WindowId } from "../../react-window-manager/hooks/useWindowManagerRegistry";
 import { useContext, useRef } from "react";
 import WindowControllerButton from "./WindowControllerButton";
 
-export default function Window({children,...props}){
+
+interface WindowProps extends DraggableResizableProps {
+    windowId?: WindowId;
+    title?: string;
+    windowType?: 'fullscreen' | 'collapse';
+}
+export default function Window({children,...props}:WindowProps){
     const { 
         windowId, 
-        title = 'Example Title For Window'
+        title,
+        windowType = 'collapse'
     }  = props;
 
     return (
@@ -27,7 +36,6 @@ export default function Window({children,...props}){
                 // const [windowPosition, windowPosition] = useGridPosition();
                 //TODO: type
                 const windowSizeBeforeCollapseRef = useRef<any>(undefined);
-                const isMaximisedRef = useRef<any>(undefined);
 
                 function collapse(){
                     windowSizeBeforeCollapseRef.current = windowSize;
@@ -42,31 +50,38 @@ export default function Window({children,...props}){
                     setWindowSize(windowSizeBeforeCollapseRef.current);
                     windowSizeBeforeCollapseRef.current = undefined;
                 }
+
+
                 return (
                     <div className={css.Window}>
                         <div className={css.WindowHeader} {...draggableProps}>
-                            <div className={css.WindowController}>
-                                {
-                                    windowSizeBeforeCollapseRef.current === undefined //state is not needed because size change will trigger rerender 
-                                        ?<WindowControllerButton controllerType={"expanded"} onClick={collapse}/>
-                                        :<WindowControllerButton controllerType={"collapsed"} onClick={expand}/>
-                                }
+                            {windowType === 'collapse'
+                                ?   <div className={css.WindowController}>
+                                    {
+                                        windowSizeBeforeCollapseRef.current === undefined//state is not needed because size change will trigger rerender 
+                                            ?<WindowControllerButton controllerType={"expanded"} onClick={collapse}/>
+                                            :<WindowControllerButton controllerType={"collapsed"} onClick={expand}/>
+                                    }
 
-                            </div>
+                                </div>
+                                : null
+                            }
                             <div className={css.WindowTitle}>
                                 {title}
                             </div>
                             <div className={css.WindowController}>
                                 <WindowControllerButton controllerType={"minimise"}/>
-                                {
-                                    isMaximised()
+                                {windowType === 'fullscreen'
+                                    ? isMaximised()
                                         ? <WindowControllerButton controllerType={"fullscreenExit"} onClick={unmaximise}/>
                                         : <WindowControllerButton controllerType={"fullscreen"} onClick={maximise}/>
+                                    
+                                    : null
                                 }
                                 <WindowControllerButton controllerType={"close"}/>
                             </div>
                         </div>
-                        <div>
+                        <div className={css.WindowBody}>
                             {children}
                         </div>
                     </div>

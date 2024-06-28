@@ -18,25 +18,25 @@ interface Size {
     height: number | 'max';
 }
 // React.ComponentProps<'div'> extends 
-interface DraggableResizableProps extends React.ComponentProps<'div'> {//React.PropsWithChildren {
+export interface DraggableResizableProps extends React.ComponentProps<'div'> {//React.PropsWithChildren {
     /**
      * 
      */
-    draggable: boolean;
+    draggable?: boolean;
     /**
      * border width in px
      */
-    windowBorderWidth: Number
+    windowBorderWidth?: Number
     /**
      * Position it first rendered at
      */
-    initialPosition: Position;
+    initialPosition?: Position;
     /**
      * Size it first rendered as
      */
-    initialSize: Size;
+    initialSize?: Size;
 
-    render: (draggableProps:any)=>React.ReactNode | undefined;
+    render?: (draggableProps:any)=>React.ReactNode;
 }
 
 export default function DraggableResizable({ children, ...props }: DraggableResizableProps) {
