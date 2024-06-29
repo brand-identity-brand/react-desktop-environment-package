@@ -1,11 +1,10 @@
 import "../global.css";
 import css from "./index.module.css";
 import DraggableResizable from "../DraggableResizable";
-import type { DraggableResizableProps } from "../DraggableResizable"
+import type { DraggableResizableProps, DraggableResizableSetStateSideEffects } from "../DraggableResizable"
 import type { WindowId } from "../../react-window-manager/hooks/useWindowManagerRegistry";
-import { useContext, useRef } from "react";
+import {  useRef } from "react";
 import WindowControllerButton from "./WindowControllerButton";
-import useWindowManager from "../../react-window-manager/hooks/useWindowManager";
 
 interface WindowProps extends DraggableResizableProps {
     // windowId?: WindowId;
@@ -19,7 +18,9 @@ export default function Window({children,onMouseDown,...props}:WindowProps){
     const { 
         title,
         windowType = 'collapse',
-        onClick_minimise
+        onClick_minimise,
+        controllerSideEffects,
+        initialPosition
     }  = props;
 
     return (
@@ -28,8 +29,9 @@ export default function Window({children,onMouseDown,...props}:WindowProps){
                 // e.stopPropagation();
                 onMouseDown&&onMouseDown(e);
             }}
-            initialPosition ={{left: 50,top: 100}}
+            initialPosition ={initialPosition}
             initialSize ={{width: 500,height: 300}}
+            controllerSideEffects = {controllerSideEffects}
             render={({draggableProps, controllers})=>{
                 const {
                     maximise,

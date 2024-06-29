@@ -15,6 +15,7 @@ export default function useWindowManager(windowId:WindowId){
     
     // render window with WindowManagerProvider
     function renderWindow(childWindowId: WindowId, Component: React.ComponentType<any>, props: React.ComponentProps<any>): React.ReactNode{ 
+       
         return ( 
             // <WindowRenderer Component={Component} props={props} key={childWindowId}/>
             <Component {...props} key={childWindowId}/>
@@ -79,6 +80,7 @@ export default function useWindowManager(windowId:WindowId){
         },
     
         unhideWindow: function (childWindowId){
+            console.log(windowSpecsRef.current[childWindowId].props.initialPosition)
             const nextHidden = hidden.filter( (value) => {
                 if ( value === childWindowId ) return false;
                 return true;
@@ -97,8 +99,10 @@ export default function useWindowManager(windowId:WindowId){
             });
         },
         //TODO: maybe move this to utils.ts
+        //TODO: move this to csont windowController={}
         updateInitialPosition: function (gridPosition){
             windowSpecsRef.current[windowId].props.initialPosition = gridPosition;
+            console.log(windowSpecsRef.current[windowId])
         },
 
         updateInitialSize: function (gridSize){

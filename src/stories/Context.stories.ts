@@ -37,7 +37,9 @@ const meta: Meta<typeof Desktop> = {
             height: 300
           }
         },
-        windows:{active:['3','4'],hidden:[],closed:[]},
+        windows:{active:[
+          // '3',
+          '4'],hidden:[],closed:[]},
         registeredIn:[] 
       },
       '3':{ 
@@ -58,10 +60,10 @@ const meta: Meta<typeof Desktop> = {
         props:{
           title: 'Example Title For Window 4',
           windowBorderWidth: 2,
-          initialPosition: {
-            top: 50,
-            left: 70
-          }
+          // initialPosition: {
+          //   top: 50,
+          //   left: 70
+          // }
         },
         windows:{active:[],hidden:[],closed:[]},
         registeredIn:[] 

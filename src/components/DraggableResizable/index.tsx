@@ -17,6 +17,13 @@ interface Size {
     width: number | 'max';
     height: number | 'max';
 }
+
+//TODO: rename
+interface DraggableResizableSetStateSideEffects{
+    updateGridPosition?: (nextGridPosition: Position)=>void;
+    updateGridSize?: (nextGridSize: Size)=>void;
+    updateIsDraggable?: (nextIsDraggable:boolean)=>void;
+}
 // React.ComponentProps<'div'> extends 
 export interface DraggableResizableProps extends React.ComponentProps<'div'> {//React.PropsWithChildren {
     /**
@@ -37,6 +44,8 @@ export interface DraggableResizableProps extends React.ComponentProps<'div'> {//
     initialSize?: Size;
 
     render?: (draggableProps:any)=>React.ReactNode;
+
+    controllerSideEffects?: DraggableResizableSetStateSideEffects
 }
 
 export default function DraggableResizable({ children, onMouseDown, ...props }: DraggableResizableProps) {
@@ -51,18 +60,29 @@ export default function DraggableResizable({ children, onMouseDown, ...props }: 
             width: 100,
             height: 100
         },
-        render
+        render,
+        controllerSideEffects
     } = props;
     const classNames = clsx(
         css.DraggableResizable, 
     )
     const divRef = useRef<HTMLElement>(null);
 
-    const [ gridPosition, setGridPosition ] = useState(initialPosition);
-    const [ gridSize, setGridSize ] = useState(initialSize);
-
-    const [ isDraggable, setIsDraggable ] = useState(draggable);
-
+    const [ gridPosition, _setGridPosition ] = useState(initialPosition);
+    function setGridPosition(nextGridPosition: Position){
+        _setGridPosition(nextGridPosition)
+        controllerSideEffects?.updateGridPosition && controllerSideEffects.updateGridPosition(nextGridPosition)
+    }
+    const [ gridSize, _setGridSize ] = useState(initialSize);
+    function setGridSize(nextGridSize: Size){
+        _setGridSize(nextGridSize)
+        controllerSideEffects?.updateGridSize && controllerSideEffects.updateGridSize(nextGridSize)
+    }
+    const [ isDraggable, _setIsDraggable ] = useState(draggable);
+    function setIsDraggable(nextIsDraggable:boolean){
+        _setIsDraggable(nextIsDraggable)
+        controllerSideEffects?.updateIsDraggable && controllerSideEffects.updateIsDraggable(nextIsDraggable)
+    }
    // Todo: setState sideeffect injections via props and custom non-react "reducer"
 
     /**
@@ -183,10 +203,11 @@ export default function DraggableResizable({ children, onMouseDown, ...props }: 
                 && gridPosition.left === 0
                 && gridPosition.top === 0
             },
-            //! unused
+            //TODO: 
             useGridSize: function(){
                 return [gridSize, setGridSize]
             },
+            //! unused
             useGridPostion: function(){
                 return [gridPosition, setGridPosition]
             },

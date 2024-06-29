@@ -47,6 +47,7 @@ export default function useWindowManagerRegistry(sessionWindowSpecs: SessionWind
         }
     }
 
+
     return {
         windowSpecsRef,
         initWindow,

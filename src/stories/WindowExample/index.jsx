@@ -8,19 +8,40 @@ export default function WindowExample(props){
         title,
         windowType,
         // render
-        windowController
+        windowController,
+        // prop drill
+        initialPosition
     } = props;
 
     const { 
         renderChildrenWindows, 
         renderHiddenWindowButtons,
-        childrenWindowController 
+        childrenWindowController
     
     } = useWindowManager(windowId);
+    const {
+        updateInitialPosition,
+
+        updateInitialSize,
+
+        updateDraggable,
+    } = childrenWindowController;
     return (
-        <Window {...{windowId, title, windowType}} 
+        <Window {...{windowId, title, windowType, initialPosition}} 
+            
             onMouseDown={()=>{windowController?.moveWindowToTop(windowId)}}
             onClick_minimise={()=>{windowController?.hideWindow(windowId)}}
+            controllerSideEffects={{
+                updateGridPosition: (nextGridPosition)=>{
+                    updateInitialPosition(nextGridPosition)
+                },
+                updateGridSize: (nextGridSize)=>{
+                    updateInitialSize(nextGridSize)
+                },
+                updateIsDraggable: (nextIsDraggable)=>{
+                    updateDraggable(nextIsDraggable)
+                },
+            }}
         >
             { renderChildrenWindows(childrenWindowController) }
 
