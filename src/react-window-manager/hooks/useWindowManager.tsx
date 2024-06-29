@@ -95,7 +95,19 @@ export default function useWindowManager(windowId:WindowId){
                 // setTargetWindowSpecsById(currentWindowId, { windows: next } );
                 return next;
             });
-        }
+        },
+        //TODO: maybe move this to utils.ts
+        updateInitialPosition: function (gridPosition){
+            windowSpecsRef.current[windowId].props.initialPosition = gridPosition;
+        },
+
+        updateInitialSize: function (gridSize){
+            windowSpecsRef.current[windowId].props.initialSize = gridSize;
+        },
+
+        updateDraggable: function (isDraggable){
+            windowSpecsRef.current[windowId].props.draggable = isDraggable;
+        },
     }
 
     return {

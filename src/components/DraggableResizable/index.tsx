@@ -61,7 +61,15 @@ export default function DraggableResizable({ children, onMouseDown, ...props }: 
     const [ gridPosition, setGridPosition ] = useState(initialPosition);
     const [ gridSize, setGridSize ] = useState(initialSize);
 
-    const [isDraggable, setIsDraggable] = useState(draggable);
+    const [ isDraggable, setIsDraggable ] = useState(draggable);
+
+   // Todo: setState sideeffect injections via props and custom non-react "reducer"
+
+    /**
+     * eample func setState(sideEffect){
+     * _setState(nextState)
+     * _sideEffect(nextState)
+    */ 
     /**
         * mouse position relative to browser viewport: e.clientX,  e.clientY
      */
@@ -175,6 +183,7 @@ export default function DraggableResizable({ children, onMouseDown, ...props }: 
                 && gridPosition.left === 0
                 && gridPosition.top === 0
             },
+            //! unused
             useGridSize: function(){
                 return [gridSize, setGridSize]
             },

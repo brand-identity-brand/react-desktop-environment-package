@@ -46,6 +46,7 @@ export default function useWindowManagerRegistry(sessionWindowSpecs: SessionWind
             windowSpecsRef.current = { [newWindowId]:resultWindowSpecs, ...windowSpecsRef.current };
         }
     }
+
     return {
         windowSpecsRef,
         initWindow,
