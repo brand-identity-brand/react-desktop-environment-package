@@ -5,22 +5,29 @@ import type { DraggableResizableProps } from "../DraggableResizable"
 import type { WindowId } from "../../react-window-manager/hooks/useWindowManagerRegistry";
 import { useContext, useRef } from "react";
 import WindowControllerButton from "./WindowControllerButton";
-
+import useWindowManager from "../../react-window-manager/hooks/useWindowManager";
 
 interface WindowProps extends DraggableResizableProps {
-    windowId?: WindowId;
+    // windowId?: WindowId;
     title?: string;
     windowType?: 'fullscreen' | 'collapse';
+    // render?: (windowId: WindowId)=>React.ReactNode | undefined;
+    // TODO
+    onClick_minimise?: any
 }
-export default function Window({children,...props}:WindowProps){
+export default function Window({children,onMouseDown,...props}:WindowProps){
     const { 
-        windowId, 
         title,
-        windowType = 'collapse'
+        windowType = 'collapse',
+        onClick_minimise
     }  = props;
 
     return (
         <DraggableResizable
+            onMouseDown={(e)=>{
+                // e.stopPropagation();
+                onMouseDown&&onMouseDown(e);
+            }}
             initialPosition ={{left: 50,top: 100}}
             initialSize ={{width: 500,height: 300}}
             render={({draggableProps, controllers})=>{
@@ -30,7 +37,7 @@ export default function Window({children,...props}:WindowProps){
                     isMaximised,
                     useGridSize,
                     // useGridPosition,
-                    enableResize
+                    // enableResize
                 } = controllers;
                 const [windowSize, setWindowSize] = useGridSize();
                 // const [windowPosition, windowPosition] = useGridPosition();
@@ -70,7 +77,7 @@ export default function Window({children,...props}:WindowProps){
                                 {title}
                             </div>
                             <div className={css.WindowController}>
-                                <WindowControllerButton controllerType={"minimise"}/>
+                                <WindowControllerButton controllerType={"minimise"} onClick={onClick_minimise}/>
                                 {windowType === 'fullscreen'
                                     ? isMaximised()
                                         ? <WindowControllerButton controllerType={"fullscreenExit"} onClick={unmaximise}/>
@@ -82,7 +89,7 @@ export default function Window({children,...props}:WindowProps){
                             </div>
                         </div>
                         <div className={css.WindowBody}>
-                            {children}
+                                {children}
                         </div>
                     </div>
                 )

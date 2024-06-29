@@ -1,7 +1,7 @@
-import WindowManagerProvider from "../contexts/WindowManager";
-import WindowRender from "../../components/WindowRenderer";
+// import WindowManagerProvider from "../contexts/WindowManager";
+// import WindowRenderer from "../../components/(removed)WindowRenderer";
 import type { WindowId, Windows } from "./useWindowManagerRegistry";
-import { useState, useRef, useContext } from "react";
+import { useState, useRef, useContext, useReducer } from "react";
 import { WindowManagerRegistryContext } from "../contexts/WindowManagerRegistry";
 
 
@@ -12,28 +12,98 @@ export default function useWindowManager(windowId:WindowId){
 
     const { active, hidden, closed } = windows;
 
-
     
     // render window with WindowManagerProvider
     function renderWindow(childWindowId: WindowId, Component: React.ComponentType<any>, props: React.ComponentProps<any>): React.ReactNode{ 
         return ( 
-            // key is added so react and sync all instances
-            <WindowManagerProvider windowId={childWindowId} key={childWindowId}>
-                <WindowRender Component={Component} props={props} />
-            </WindowManagerProvider>
+            // <WindowRenderer Component={Component} props={props} key={childWindowId}/>
+            <Component {...props} key={childWindowId}/>
         )
     }
-    function renderChildrenWindows(): React.ReactNode{
+    function renderChildrenWindows(childrenWindowController): React.ReactNode{
         return active.map( childWindowId => {
             const childWindowSpec = windowSpecsRef.current[childWindowId];
             const { componentName, props } =childWindowSpec;
-            return renderWindow( childWindowId, components[componentName], {windowId: childWindowId, ...props});
+            return renderWindow( childWindowId, components[componentName], {windowId: childWindowId, windowController: childrenWindowController,...props});
         });
     }
 
+    function renderHiddenWindowButtons(Component: React.ComponentType<any>){
+        return hidden.map( childWindowId => {
+            const childWindowSpec = windowSpecsRef.current[childWindowId];
+            const {props:{title}} = childWindowSpec;
+            return <Component {...{title, windowId: childWindowId}} key={childWindowId} onClick_unhide={()=>{childrenWindowController.unhideWindow(childWindowId)}}/>
+        })
+    }
+    // TODO: improve DX
+    const childrenWindowController = {
+        moveWindowToTop: function(childWindowId: WindowId){
+            // do nothing if window is already at the top
+            const windowPosition = active.indexOf(childWindowId);
+            if ( windowPosition === active.length - 1 ) return;
+            
+            // rearrang childWindowId to the last position.
+            setWindows((prev)=> {
+                const nextWithoutId = prev.active.filter( item => {
+                    if (item === childWindowId) return false;
+                    return true;
+                });
+                const next = {
+                    active: [...nextWithoutId, childWindowId],
+                    hidden: prev.hidden,
+                    closed: prev.closed
+                };
+                
+                // setTargetWindowSpecsById(currentWindowId, { windows: next });
+                return next;
+            });
+        },
+        hideWindow: function (childWindowId){
+
+            const nextActive = active.filter( (value) => {
+                if ( value === childWindowId ) return false;
+                return true;
+            });
+            //checker0
+            if ( nextActive.length === active.length ) return;
+            //checker0 passed
+            setWindows((prev)=> {
+                const next = {
+                    active: nextActive,
+                    hidden: [...prev.hidden, childWindowId],
+                    closed: prev.closed
+                }
+                // setTargetWindowSpecsById(currentWindowId, {windows: next});
+                return next;
+            });
+        },
+    
+        unhideWindow: function (childWindowId){
+            const nextHidden = hidden.filter( (value) => {
+                if ( value === childWindowId ) return false;
+                return true;
+            });
+            //checker0
+            if ( nextHidden.length === hidden.length ) return;
+            //checker0 passed
+            setWindows((prev)=> {
+                const next = {
+                    active: [...prev.active, childWindowId],
+                    hidden: nextHidden,
+                    closed: prev.closed
+                }
+                // setTargetWindowSpecsById(currentWindowId, { windows: next } );
+                return next;
+            });
+        }
+    }
+
     return {
+        childrenWindowController,
+        // useWindows:()=>([windows, setWindows]),
         renderWindow,
-        renderChildrenWindows
+        renderChildrenWindows,
+        renderHiddenWindowButtons
     }
 }
 

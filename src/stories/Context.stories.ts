@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import Desktop, {Desktop2} from '../components/Desktop';
-import DraggableResizable from '../components/DraggableResizable';
+import Desktop from '../components/Desktop';
+import Window from '../components/Window';
+import WindowExample from "./WindowExample";
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta: Meta<typeof Desktop> = {
   title: 'Special Components/React Window Manager',
@@ -23,8 +24,9 @@ const meta: Meta<typeof Desktop> = {
           registeredIn:[] 
       },
       '2': { 
-        componentName: "Desktop2",
+        componentName: "WindowExample",
         props:{
+          windowType: "fullscreen",
           windowBorderWidth: 5,
           initialPosition: {
             top: 250,
@@ -35,12 +37,26 @@ const meta: Meta<typeof Desktop> = {
             height: 300
           }
         },
-        windows:{active:['3'],hidden:[],closed:[]},
+        windows:{active:['3','4'],hidden:[],closed:[]},
         registeredIn:[] 
       },
       '3':{ 
-        componentName: "Desktop2",
+        componentName: "WindowExample",
         props:{
+          title: 'Example Title For Window 3',
+          windowBorderWidth: 2,
+          initialPosition: {
+            top: 50,
+            left: 70
+          }
+        },
+        windows:{active:[],hidden:[],closed:[]},
+        registeredIn:[] 
+      },
+      '4':{ 
+        componentName: "WindowExample",
+        props:{
+          title: 'Example Title For Window 4',
           windowBorderWidth: 2,
           initialPosition: {
             top: 50,
@@ -52,8 +68,9 @@ const meta: Meta<typeof Desktop> = {
       }
     }, 
     components: {
-      "DraggableResizable": DraggableResizable,
-      "Desktop2": Desktop2
+      "Window": Window,
+      "Desktop": Desktop,
+      "WindowExample": WindowExample
     }
   },
   tags: ['autodocs'],
@@ -63,11 +80,11 @@ const meta: Meta<typeof Desktop> = {
   ////args: { onClick: fn() },
   args:{
     windowId:'1',
-    windowBorderWidth: 10,
-    initialSize: {
-      width: 500,
-      height: 500
-    }
+    // windowBorderWidth: 10,s
+    // initialSize: {
+    //   width: 500,
+    //   height: 500
+    // }
   }
 };
 

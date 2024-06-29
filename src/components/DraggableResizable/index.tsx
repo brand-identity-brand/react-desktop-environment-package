@@ -39,7 +39,7 @@ export interface DraggableResizableProps extends React.ComponentProps<'div'> {//
     render?: (draggableProps:any)=>React.ReactNode;
 }
 
-export default function DraggableResizable({ children, ...props }: DraggableResizableProps) {
+export default function DraggableResizable({ children, onMouseDown, ...props }: DraggableResizableProps) {
     const {
         draggable = true,
         windowBorderWidth = 2,
@@ -185,7 +185,7 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
         }
 
   return (
-    <div ref={divRef}
+    <div ref={divRef} onMouseDown={(e)=>{ e.stopPropagation(); onMouseDown&&onMouseDown(e);}}
         className={classNames}
         style={{
             "--border-width": `${windowBorderWidth}px`,
@@ -486,6 +486,7 @@ export default function DraggableResizable({ children, ...props }: DraggableResi
             }}
         />
         <div className={css.Body}>
+            
             { //https://react.dev/reference/react/cloneElement
                 // Children.map(children, (child, index) => {
                 //     switch (typeof child){

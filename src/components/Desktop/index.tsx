@@ -1,40 +1,18 @@
-import { useContext, useEffect } from "react"
-import WindowManagerProvider, {WindowManagerContext} from "../../react-window-manager/contexts/WindowManager"
 import useWindowManager from "../../react-window-manager/hooks/useWindowManager";
-import DraggableResizable from "../DraggableResizable";
-export default function Desktop({windowId, ...props}){
+
+export default function Desktop({windowId}){
     // const s= useContext( WindowManagerContext);
 
-    const { renderChildrenWindows } = useWindowManager(windowId);
+    const { renderChildrenWindows, windows } = useWindowManager(windowId);
     
     return (
-        // <WindowManagerProvider windowId={windowId}>
-
-        <DraggableResizable {...props}>
-               { windowId}
-                { renderChildrenWindows() }
-                </DraggableResizable>
-
-        // </WindowManagerProvider>
+        <>
+            { windowId}
+            { renderChildrenWindows() }
+        </>
     )
 }
-export function Desktop2({windowId , ...props}){
-    // const s= useContext( WindowManagerContext);
 
-    const { renderChildrenWindows } = useWindowManager(windowId);
-    
-    return (
-        // <WindowManagerProvider windowId={windowId}>
-
-            <DraggableResizable  {...props}>
-               {/* { windowId} */}
-                { renderChildrenWindows() }
-            </DraggableResizable>
-
-
-        // </WindowManagerProvider>
-    )
-}
 // import css from './index.module.css';
 // import { useContext, useEffect, useState } from 'react';
 // import { WindowManagerRegistryContext, WindowManagerContext, WindowManagerProvider } from 'react-window-manager';
