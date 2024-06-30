@@ -11,9 +11,9 @@ import { libInjectCss } from 'vite-plugin-lib-inject-css'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    react(), 
+    react(),
     libInjectCss(),
-    dts({ exclude: ['**/*.stories.tsx', 'src/stories', 'src/test', '**/*.test.tsx'] })
+    dts({ exclude: ['**/*.stories.tsx', 'src/stories', 'src/test', '**/*.test.tsx'] }),
   ],
   build: {
     lib: {
@@ -23,7 +23,11 @@ export default defineConfig({
     rollupOptions: {
       external: ['react', 'react-dom', 'react/jsx-runtime'],
       input: Object.fromEntries(
-        globSync(['src/components/**/index.tsx', 'src/main.ts', './src/react-window-manager/**/*.*']).map((file) => {
+        globSync([
+          'src/components/**/index.tsx',
+          'src/main.ts',
+          './src/react-window-manager/**/*.*',
+        ]).map((file) => {
           // This remove `src/` as well as the file extension from each
           // file, so e.g. src/nested/foo.js becomes nested/foo
           const entryName = path.relative(

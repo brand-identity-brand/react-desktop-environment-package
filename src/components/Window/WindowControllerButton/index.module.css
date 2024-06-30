@@ -1,36 +1,38 @@
 .WindowControllerButton {
-    --button-size: calc( 18px - 2px - 2px );
+  --button-size: calc(18px - 2px - 2px);
 
+  all: unset;
+  height: var(--button-size);
+  aspect-ratio: 1 / 1;
+  font-family: 'Rubik', sans-serif;
+  /* layout */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 
-    all: unset;
-    height: var( --button-size ) ;
-    aspect-ratio: 1 / 1 ;
-    font-family: 'Rubik', sans-serif;
-    /* layout */
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-
-    color: black;
+  color: black;
 }
 
 .close_span {
-    font-size: 16px;
-    font-variation-settings: 'FILL' 0, 'wght' 450, 'GRAD' 0, 'opsz' 24;
-    
+  font-size: 16px;
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 450,
+    'GRAD' 0,
+    'opsz' 24;
 }
 .expanded_span {
-    font-variation-settings:
-            'FILL' 0,
-            'wght' 500,
-            'GRAD' 0,
-            'opsz' 0;
-    font-size: 12px;
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 500,
+    'GRAD' 0,
+    'opsz' 0;
+  font-size: 12px;
 }
 
 .minimise {
-    font-size: 17px;
-    /* line-height: 20px; */
-    font-weight: 500;
+  font-size: 17px;
+  /* line-height: 20px; */
+  font-weight: 500;
 }

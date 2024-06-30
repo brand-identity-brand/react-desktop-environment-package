@@ -9,19 +9,19 @@ const meta = {
   component: Window,
   parameters: {
     viewport: {
-        defaultViewport: 'fullHD',
+      defaultViewport: 'fullHD',
     },
   },
   tags: ['autodocs'],
-//   decorators: [
-//     (Story) => (
-//         <div style={{ margin: '3em' }}>
-//           <Story />
-//         </div>
-//     ),
-//   ],
+  //   decorators: [
+  //     (Story) => (
+  //         <div style={{ margin: '3em' }}>
+  //           <Story />
+  //         </div>
+  //     ),
+  //   ],
   args: {
-    title: 'Example Title For Window'
+    title: 'Example Title For Window',
     // onClick: fn(),
   },
 } satisfies Meta<typeof Window>
@@ -30,7 +30,5 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
-    args: {
-      
-    }
-};
+  args: {},
+}

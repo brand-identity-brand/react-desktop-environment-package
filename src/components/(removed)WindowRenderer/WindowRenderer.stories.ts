@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
-import WindowRenderer from '.';
-import DraggableResizable from '../DraggableResizable';
+import type { Meta, StoryObj } from '@storybook/react'
+import { fn } from '@storybook/test'
+import WindowRenderer from '.'
+import DraggableResizable from '../DraggableResizable'
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -15,26 +15,25 @@ const meta = {
   tags: ['autodocs'],
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
   argTypes: {
-    Component: { 
-      description: "the react component as WindowRenderer",
+    Component: {
+      description: 'the react component as WindowRenderer',
       table: {
         type: { summary: 'React.ComponentType<any>' },
-      }
+      },
     },
-    props: { 
-      description: "props for prop.Component",
+    props: {
+      description: 'props for prop.Component',
       table: {
         type: { summary: 'React.ComponentProps<any>' },
-      }
+      },
     },
-
   },
   // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
   ////args: { onClick: fn() },
-} satisfies Meta<typeof WindowRenderer>;
+} satisfies Meta<typeof WindowRenderer>
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Primary: Story = {
@@ -44,14 +43,12 @@ export const Primary: Story = {
       windowBorderWidth: 10,
       initialPosition: {
         top: 50,
-        left: 50
+        left: 50,
       },
       initialSize: {
         width: 40,
-        height: 70
-      }
-    }
+        height: 70,
+      },
+    },
   },
-};
-
-
+}

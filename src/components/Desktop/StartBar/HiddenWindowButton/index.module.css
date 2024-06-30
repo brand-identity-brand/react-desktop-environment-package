@@ -1,0 +1,13 @@
+.HiddenWindowButton{
+    box-sizing: border-box;
+
+    all: unset;
+
+    --button-size: calc(18px - 2px - 2px);
+    height: var(--button-size);
+
+    border: 2px solid black;
+    border-radius: 5px;
+
+    padding: 3px;
+}

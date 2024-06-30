@@ -1,49 +1,48 @@
 .Window {
-    box-sizing: border-box;
-    width: 100%;
-    height: 100%;
-    /* layout  */
-    display: flex;
-    flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  /* layout  */
+  display: flex;
+  flex-direction: column;
 }
 
 .WindowHeader {
-    box-sizing: border-box;
-    width: 100%;
-    height: 20px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 20px;
 
-    background-color: black;
-    color: white;
-    border-bottom: 2px solid black;
-    /* layout  */
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  background-color: black;
+  color: white;
+  border-bottom: 2px solid black;
+  /* layout  */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-.WindowTitle{
-    box-sizing: border-box;
-    /* background-color: green; */
-    color: white;
+.WindowTitle {
+  box-sizing: border-box;
+  /* background-color: green; */
+  color: white;
 }
-.WindowController{
-    box-sizing: border-box;
-    background-color: white;
-    /* color: black; */
+.WindowController {
+  box-sizing: border-box;
+  background-color: white;
+  /* color: black; */
 
-
-    height: 100%;
-    /* layout */
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2px;
-    padding: 2px; 
+  height: 100%;
+  /* layout */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2px;
+  padding: 2px;
 }
 
-.WindowBody{
-    width: 100%;
-    height: 100%;
-    position: relative;
+.WindowBody {
+  width: 100%;
+  height: 100%;
+  position: relative;
 }

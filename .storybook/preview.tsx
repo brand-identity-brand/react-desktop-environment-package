@@ -1,8 +1,10 @@
 import React from 'react'
 import type { Preview } from '@storybook/react'
-import { MINIMAL_VIEWPORTS } from '@storybook/addon-viewport';
+import { MINIMAL_VIEWPORTS } from '@storybook/addon-viewport'
 
-import WindowManagerRegistryProvider, {WindowManagerRegistryContext} from '../src/react-window-manager/contexts/WindowManagerRegistry';
+import WindowManagerRegistryProvider, {
+  WindowManagerRegistryContext,
+} from '../src/react-window-manager/contexts/WindowManagerRegistry'
 const customViewports = {
   fullHD: {
     name: 'fullHD',
@@ -10,8 +12,8 @@ const customViewports = {
       width: '1920px',
       height: '1080px',
     },
-  }
-};
+  },
+}
 const preview: Preview = {
   parameters: {
     controls: {
@@ -20,7 +22,7 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
-    layout: "fullscreen",
+    layout: 'fullscreen',
     viewport: {
       viewports: {
         ...MINIMAL_VIEWPORTS,
@@ -28,15 +30,18 @@ const preview: Preview = {
       },
     },
   },
-  decorators:[
+  decorators: [
     // 👇 Defining the decorator in the preview file applies it to all stories
     (Story, { parameters }) => {
       // 👇 Make it configurable by reading from parameters
-      const { storyType, sessionWindowSpecs, components } = parameters;
-      switch(storyType){
+      const { storyType, sessionWindowSpecs, components } = parameters
+      switch (storyType) {
         case 'withRWM':
           return (
-            <WindowManagerRegistryProvider components={components} sessionWindowSpecs={sessionWindowSpecs}> 
+            <WindowManagerRegistryProvider
+              components={components}
+              sessionWindowSpecs={sessionWindowSpecs}
+            >
               <Story />
             </WindowManagerRegistryProvider>
           )
@@ -48,14 +53,13 @@ const preview: Preview = {
         //   )
         default:
           return (
-            <div style={{width: "100%", height: "1080px",backgroundColor: "grey"}}>
-              <Story/>
+            <div style={{ width: '100%', height: '1080px', backgroundColor: 'grey' }}>
+              <Story />
             </div>
-            
-        )
+          )
       }
     },
-  ]
+  ],
 }
 
 export default preview
