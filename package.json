@@ -1,7 +1,7 @@
 {
   "name": "react-desktop-environment",
   "private": false,
-  "version": "0.3.2",
+  "version": "0.3.3",
   "type": "module",
   "files": [
     "dist"
