@@ -16,6 +16,7 @@ interface WindowProps extends DraggableResizableProps {
   // render?: (windowId: WindowId)=>React.ReactNode | undefined;
   // TODO
   onClick_minimise?: any
+  controllerSideEffects? : DraggableResizableSetStateSideEffects
 }
 export default function Window({ children, onMouseDown, ...props }: WindowProps) {
   const {

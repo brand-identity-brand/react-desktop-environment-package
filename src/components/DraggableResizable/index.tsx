@@ -19,7 +19,7 @@ interface Size {
 }
 
 //TODO: rename
-interface DraggableResizableSetStateSideEffects {
+export interface DraggableResizableSetStateSideEffects {
   updateGridPosition?: (nextGridPosition: Position) => void
   updateGridSize?: (nextGridSize: Size) => void
   updateIsDraggable?: (nextIsDraggable: boolean) => void
@@ -66,6 +66,7 @@ export default function DraggableResizable({
       height: 100,
     },
     render,
+    // TODO: rename/reorganise to improve DX
     controllerSideEffects,
   } = props
   const classNames = clsx(css.DraggableResizable)

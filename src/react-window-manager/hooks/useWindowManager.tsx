@@ -115,8 +115,9 @@ export default function useWindowManager(windowId: WindowId) {
         return next
       })
     },
-    //TODO: maybe move this to utils.ts
-    //TODO: move this to csont windowController={}
+  }
+  //TODO: maybe move this to utils.ts
+  const windowInitialPropsUpdater = {
     updateInitialPosition: function (gridPosition) {
       windowSpecsRef.current[windowId].props.initialPosition = gridPosition
       console.log(windowSpecsRef.current[windowId])
@@ -130,9 +131,9 @@ export default function useWindowManager(windowId: WindowId) {
       windowSpecsRef.current[windowId].props.draggable = isDraggable
     },
   }
-
   return {
     childrenWindowController,
+    windowInitialPropsUpdater,
     // useWindows:()=>([windows, setWindows]),
     renderWindow,
     renderChildrenWindows,

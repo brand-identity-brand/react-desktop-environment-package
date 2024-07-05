@@ -9,23 +9,27 @@ export default function WindowExample(props) {
     title,
     windowType,
     // render
-    windowController,
-    // prop drill
+    windowController, 
+    // prop drill. origin: Context Provider -> Window -> DraggableResizable
     windowBorderWidth,
     initialPosition,
     initialSize,
     draggable,
   } = props
 
-  const { renderChildrenWindows, renderHiddenWindowButtons, childrenWindowController } =
-    useWindowManager(windowId)
+  const { 
+    renderChildrenWindows, //helper for mapping children with their Window component
+    renderHiddenWindowButtons, //helper for mapping children with their Minimiseed component
+    childrenWindowController, //this passes parent window state setters {active,hidden,closed} to children
+    windowInitialPropsUpdater //helper for syncing Window component initial props when state setters are triggered
+  } = useWindowManager(windowId);
   const {
     updateInitialPosition,
 
     updateInitialSize,
 
     updateDraggable,
-  } = childrenWindowController
+  } = windowInitialPropsUpdater;
   return (
     <Window
       {...{
